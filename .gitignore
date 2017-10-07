@@ -8,6 +8,10 @@
 bin/
 buildout-cache/
 develop-eggs/
+docs/Makefile
+docs/make.bat
+docs/doctrees
+docs/html
 eggs/
 htmlcov/
 include/
