@@ -1,7 +1,31 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:plone="http://namespaces.plone.org/plone">
 
+  <includeDependencies package="." />
+
+  <plone:service
+    method="GET"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.TranslationInfo"
+    permission="zope2.View"
+    />
+
+  <plone:service
+    method="POST"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.LinkTranslations"
+    permission="plone.app.multilingual.ManageTranslations"
+  />
+
+  <plone:service
+    method="DELETE"
+    name="@translations"
+    for="Products.CMFCore.interfaces.IContentish"
+    factory=".translations.UnlinkTranslations"
+    permission="plone.app.multilingual.ManageTranslations"
+  />
 
 </configure>
