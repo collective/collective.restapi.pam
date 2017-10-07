@@ -38,8 +38,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'plone.api',
         'setuptools',
+        'plone.restapi',
+        'plone.app.dexterity',
         'plone.app.multilingual <=2.99'
     ],
     extras_require={
@@ -49,8 +50,9 @@ setup(
             # Remove if your package shall be part of coredev.
             # plone_coredev tests as of 2016-04-01.
             'plone.testing>=5.0.0',
-            'plone.app.contenttypes',
+            'plone.app.contenttypes <1.2',
             'plone.app.robotframework[debug]',
+            'requests',
         ],
     },
     entry_points="""
