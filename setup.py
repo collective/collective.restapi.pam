@@ -39,9 +39,12 @@ setup(
     zip_safe=False,
     install_requires=[
         'setuptools',
+        'plone.multilingualbehavior',
+        'archetypes.multilingual <2',
         'plone.restapi',
         'plone.app.dexterity',
-        'plone.app.multilingual <=2.99'
+        'plone.app.multilingual <=2.99',
+        'Plone <= 4.99',
     ],
     extras_require={
         'test': [
