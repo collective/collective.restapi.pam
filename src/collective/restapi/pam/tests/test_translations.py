@@ -3,8 +3,6 @@ from base64 import b64encode
 from collective.restapi.pam.testing import COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING  # noqa
 from collective.restapi.pam.testing import COLLECTIVE_RESTAPI_PAM_INTEGRATION_TESTING  # noqa
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
-from plone.app.multilingual.interfaces import ILanguage
-from plone.app.multilingual.interfaces import ITranslationManager
 from plone.app.testing import login
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
@@ -13,11 +11,23 @@ from zope.component import getMultiAdapter
 from zope.event import notify
 from ZPublisher.pubevents import PubStart
 
+import pkg_resources
 import requests
 import transaction
 
+try:
+    # p.a.multilingual < 1.2
+    pkg_resources.get_distribution('plone.multilingual')
+    from plone.multilingual.interfaces import ITranslationManager
+    from plone.multilingual.interfaces import ILanguage
 
-class TestLPTranslationInfo(TestCase):
+except pkg_resources.DistributionNotFound:
+    # p.a.multilingual >1.1, < 2
+    from plone.app.multilingual.interfaces import ITranslationManager
+    from plone.app.multilingual.interfaces import ILanguage
+
+
+class TestTranslationInfo(TestCase):
 
     layer = COLLECTIVE_RESTAPI_PAM_INTEGRATION_TESTING
 

@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
-from zope.interface import alsoProvides
-from Products.CMFCore.utils import getToolByName
-from plone.app.multilingual.interfaces import ITranslationManager
-from plone.restapi.services import Service
 from plone.restapi.deserializer import json_body
-
-from plone.app.multilingual.interfaces import ILanguage
+from plone.restapi.services import Service
+from Products.CMFCore.utils import getToolByName
+from zope.interface import alsoProvides
 
 import plone.protect.interfaces
+import pkg_resources
+
+try:
+    # p.a.multilingual < 1.2
+    pkg_resources.get_distribution('plone.multilingual')
+    from plone.multilingual.interfaces import ITranslationManager
+    from plone.multilingual.interfaces import ILanguage
+
+except pkg_resources.DistributionNotFound:
+    # p.a.multilingual >1.1, < 2
+    from plone.app.multilingual.interfaces import ITranslationManager
+    from plone.app.multilingual.interfaces import ILanguage
 
 
 class TranslationInfo(Service):
