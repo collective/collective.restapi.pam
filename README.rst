@@ -1,38 +1,31 @@
-.. This README is meant for consumption by humans and pypi. Pypi can render rst files so please do not use Sphinx features.
-   If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
-   This text does not appear on pypi or github. It is a comment.
 
-==============================================================================
+.. image:: https://secure.travis-ci.org/collective/collective.restapi.pam.png?branch=master
+ :target: http://travis-ci.org/collective/collective.restapi.pam
+
+.. image:: https://coveralls.io/repos/github/collective/collective.restapi.pam/badge.svg?branch=master
+ :target: https://coveralls.io/github/collective/collective.restapi.pam?branch=master
+
+.. image:: https://landscape.io/github/collective/collective.restapi.pam/master/landscape.svg?style=flat
+  :target: https://landscape.io/github/collective/collective.restapi.pam/master
+  :alt: Code Health
+
+.. image:: https://readthedocs.org/projects/collectiverestapipam/badge/?version=latest
+  :target: https://collectiverestapipam.readthedocs.io/en/latest/?badge=latest
+
+
+======================
 collective.restapi.pam
-==============================================================================
+======================
 
-Tell me what your product does
-
-Features
---------
-
-- Can be bullet points
-
-
-Examples
---------
-
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
+An add-on providing plone.restapi endpoint for translations handled using
+plone.app.multilingual versions 1.x and 2.x
 
 
 Documentation
 -------------
 
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
+Full documentation for end users can be found in the "docs" folder, and is also available online at https://collectiverestapipam.readthedocs.io
 
-
-Translations
-------------
-
-This product has been translated into
-
-- Klingon (thanks, K'Plai)
 
 
 Installation
@@ -56,14 +49,7 @@ Contribute
 
 - Issue Tracker: https://github.com/collective/collective.restapi.pam/issues
 - Source Code: https://github.com/collective/collective.restapi.pam
-- Documentation: https://docs.plone.org/foo/bar
-
-
-Support
--------
-
-If you are having issues, please let us know.
-We have a mailing list located at: project@example.com
+- Documentation: https://collectiverestapipam.readthedocs.io
 
 
 License
