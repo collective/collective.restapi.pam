@@ -15,7 +15,7 @@ long_description = '\n\n'.join([
 setup(
     name='collective.restapi.pam',
     version='1.0a1',
-    description="An add-on for Plone",
+    description="An add-on providing plone.restapi endpoint for translations handled using plone.app.multilingual",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
@@ -39,9 +39,8 @@ setup(
     zip_safe=False,
     install_requires=[
         'plone.api',
-        'Products.GenericSetup>=1.8.2',
         'setuptools',
-        'z3c.jbot',
+        'plone.app.multilingual <=2.99'
     ],
     extras_require={
         'test': [
