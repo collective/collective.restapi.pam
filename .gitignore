@@ -20,6 +20,7 @@ local/
 parts/
 src/*
 test.plone_addon/
+travis.cfg
 var/
 # files
 .installed.cfg
