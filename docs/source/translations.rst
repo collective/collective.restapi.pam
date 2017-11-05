@@ -1,6 +1,11 @@
-Translations
-============
+Multilingual Translations (p.a.multilingual)
+============================================
 
+.. note::
+    This addon will only work with `plone.app.multilingual`_ in Plone 4.
+    You can install `collective.restapi.linguaplone`_ if you want to get similar
+    features in Plone 4 using `Products.LinguaPlone`_
+    and use plain `plone.restapi`_ in Plone 5.
 
 Using this addon you can get information about the translations of a content
 object handled using `plone.app.multilingual`_ versions 1.x and 2.x.
@@ -55,3 +60,6 @@ endpoint of the content item and provide the language code you want to unlink.:
 
 
 .. _`plone.app.multilingual`: https://pypi.python.org/pypi/plone.app.multilingual
+.. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone.
+.. _`collective.restapi.linguaplone`: https://pypi.python.org/pypi/collective.restapi.linguaplone
+.. _`plone.restapi`: https://pypi.python.org/pypi/plone.restapi
