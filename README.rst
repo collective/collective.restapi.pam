@@ -19,7 +19,7 @@ collective.restapi.pam
 ======================
 
 An add-on providing plone.restapi endpoint for translations handled using
-plone.app.multilingual versions 1.x and 2.x
+`plone.app.multilingual`_ versions 1.x and 2.x
 
 
 Documentation
@@ -57,3 +57,5 @@ License
 -------
 
 The project is licensed under the GPLv2.
+
+.. _`plone.app.multilingual`: https://pypi.python.org/pypi/plone.app.multilingual
