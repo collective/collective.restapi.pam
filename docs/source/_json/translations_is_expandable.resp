@@ -1,0 +1,54 @@
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "@components": {
+    "breadcrumbs": {
+      "@id": "http://localhost:55001/plone/en/test-document/@breadcrumbs"
+    }, 
+    "navigation": {
+      "@id": "http://localhost:55001/plone/en/test-document/@navigation"
+    }, 
+    "translations": {
+      "@id": "http://localhost:55001/plone/en/test-document/@translations"
+    }, 
+    "workflow": {
+      "@id": "http://localhost:55001/plone/en/test-document/@workflow"
+    }
+  }, 
+  "@id": "http://localhost:55001/plone/en/test-document", 
+  "@type": "Document", 
+  "UID": "bcca05beff0f4fa2986f624042d1d9e8", 
+  "allow_discussion": null, 
+  "changeNote": "", 
+  "contributors": [], 
+  "created": "2016-10-21T21:00:00+02:00", 
+  "creators": [
+    "test_user_1_", 
+    "admin"
+  ], 
+  "description": "", 
+  "effective": null, 
+  "exclude_from_nav": false, 
+  "expires": null, 
+  "id": "test-document", 
+  "is_folderish": false, 
+  "language": "en", 
+  "layout": "document_view", 
+  "modified": "2016-10-21T21:00:00+02:00", 
+  "parent": {
+    "@id": "http://localhost:55001/plone/en", 
+    "@type": "LRF", 
+    "description": "", 
+    "review_state": "published", 
+    "title": "English"
+  }, 
+  "relatedItems": [], 
+  "review_state": "private", 
+  "rights": "", 
+  "subjects": [], 
+  "table_of_contents": null, 
+  "text": null, 
+  "title": "Test document", 
+  "version": "current"
+}

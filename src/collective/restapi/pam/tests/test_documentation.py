@@ -199,3 +199,20 @@ class TestDocumentation(unittest.TestCase):
                 "language": "es"
             })
         save_request_and_response_for_docs('translations_delete', response)
+
+    def test_translations_is_expandable(self):
+        ITranslationManager(self.en_content).register_translation(
+            'es', self.es_content)
+        transaction.commit()
+        response = self.api_session.get(self.en_content.absolute_url())
+
+        save_request_and_response_for_docs('translations_is_expandable', response)
+
+    def test_expand_translations(self):
+        ITranslationManager(self.en_content).register_translation(
+            'es', self.es_content)
+        transaction.commit()
+        response = self.api_session.get(
+            self.en_content.absolute_url() + '?expand=translations')
+
+        save_request_and_response_for_docs('expand_translations', response)
