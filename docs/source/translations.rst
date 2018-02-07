@@ -1,3 +1,5 @@
+.. _translations:
+
 Multilingual Translations (p.a.multilingual)
 ============================================
 
@@ -59,7 +61,37 @@ endpoint of the content item and provide the language code you want to unlink.:
    :language: http
 
 
+Expansion
+---------
+
+This endpoint uses the `expansion`_ mechanism of `plone.restapi`_ which allows to get additional
+information about a content item in one query, avoiding unnecesary requests.
+
+If a simple ``GET`` request is done on the content item, a new entry will be shown on the `@compoenents`
+entry with the URL of the `@translations` endpoint:
+
+..  http:example:: curl httpie python-requests
+    :request: _json/translations_is_expandable.req
+
+.. literalinclude:: _json/translations_is_expandable.resp
+   :language: http
+
+
+That means that, to include the translations of the item in the main content response, you can
+request to expand it:
+
+..  http:example:: curl httpie python-requests
+    :request: _json/expand_translations.req
+
+And the response will include the required information:
+
+.. literalinclude:: _json/expand_translations.resp
+   :language: http
+
+
+
 .. _`plone.app.multilingual`: https://pypi.python.org/pypi/plone.app.multilingual
 .. _`Products.LinguaPlone`: https://pypi.python.org/pypi/Products.LinguaPlone
 .. _`collective.restapi.linguaplone`: https://pypi.python.org/pypi/collective.restapi.linguaplone
 .. _`plone.restapi`: https://pypi.python.org/pypi/plone.restapi
+.. _`expansion`: https://plonerestapi.readthedocs.io/en/latest/expansion.html

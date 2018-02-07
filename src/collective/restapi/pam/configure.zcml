@@ -4,6 +4,8 @@
 
   <includeDependencies package="." />
 
+  <adapter factory=".translations.Translations" name="translations"/>
+
   <plone:service
     method="GET"
     name="@translations"

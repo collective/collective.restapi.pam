@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from plone.restapi.deserializer import json_body
+from plone.restapi.interfaces import IExpandableElement
 from plone.restapi.services import Service
 from Products.CMFCore.utils import getToolByName
+from zope.component import adapter
 from zope.interface import alsoProvides
+from zope.interface import Interface
+from zope.interface import implementer
 
 import plone.protect.interfaces
 import pkg_resources
@@ -10,13 +14,44 @@ import pkg_resources
 try:
     # p.a.multilingual < 1.2
     pkg_resources.get_distribution('plone.multilingual')
-    from plone.multilingual.interfaces import ITranslationManager
     from plone.multilingual.interfaces import ILanguage
+    from plone.multilingual.interfaces import ITranslatable
+    from plone.multilingual.interfaces import ITranslationManager
 
 except pkg_resources.DistributionNotFound:
     # p.a.multilingual >1.1, < 2
-    from plone.app.multilingual.interfaces import ITranslationManager
     from plone.app.multilingual.interfaces import ILanguage
+    from plone.app.multilingual.interfaces import ITranslatable
+    from plone.app.multilingual.interfaces import ITranslationManager
+
+
+@implementer(IExpandableElement)
+@adapter(ITranslatable, Interface)
+class Translations(object):
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def __call__(self, expand=False):
+        result = {
+            'translations': {
+                '@id': '{}/@translations'.format(self.context.absolute_url()),
+            },
+        }
+        if not expand:
+            return result
+
+        translations = []
+        manager = ITranslationManager(self.context)
+        for language, translation in manager.get_translations().items():
+            if language != ILanguage(self.context).get_language():
+                translations.append({
+                    '@id': translation.absolute_url(),
+                    'language': language,
+                })
+
+        result['translations']['items'] = translations
+        return result
 
 
 class TranslationInfo(Service):
@@ -24,19 +59,8 @@ class TranslationInfo(Service):
     """
 
     def reply(self):
-        manager = ITranslationManager(self.context)
-        info = {
-            '@id': self.context.absolute_url(),
-            'language': ILanguage(self.context).get_language(),
-            'translations': []}
-        for language, translation in manager.get_translations().items():
-            if language != ILanguage(self.context).get_language():
-                info['translations'].append({
-                    '@id': translation.absolute_url(),
-                    'language': language,
-                })
-
-        return info
+        translations = Translations(self.context, self.request)
+        return translations(expand=True)['translations']
 
 
 class LinkTranslations(Service):
