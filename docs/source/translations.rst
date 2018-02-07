@@ -67,7 +67,7 @@ Expansion
 This endpoint uses the `expansion`_ mechanism of `plone.restapi`_ which allows to get additional
 information about a content item in one query, avoiding unnecesary requests.
 
-If a simple ``GET`` request is done on the content item, a new entry will be shown on the `@compoenents`
+If a simple ``GET`` request is done on the content item, a new entry will be shown on the `@components`
 entry with the URL of the `@translations` endpoint:
 
 ..  http:example:: curl httpie python-requests
