@@ -2,10 +2,17 @@ Changelog
 =========
 
 
-1.0.1 (unreleased)
+2.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Breaking: rename the results attributes to be 'items'
+  [erral]
+
+- Breaking: remove 'language' attribute from top-level response
+  [erral]
+
+- Make `@translations` endpoint expandable
+  [erral]
 
 
 1.0.0 (2018-01-18)
