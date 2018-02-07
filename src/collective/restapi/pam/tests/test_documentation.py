@@ -129,6 +129,11 @@ class TestDocumentation(unittest.TestCase):
         self.portal = self.layer['portal']
         self.portal_url = self.portal.absolute_url()
 
+        # Register custom UUID generator to produce stable UUIDs during tests
+        pushGlobalRegistry(getSite())
+        register_static_uuid_utility(prefix='SomeUUID')
+
+
         self.time_freezer = freeze_time("2016-10-21 19:00:00")
         self.frozen_time = self.time_freezer.start()
 
@@ -170,6 +175,7 @@ class TestDocumentation(unittest.TestCase):
 
     def tearDown(self):
         self.time_freezer.stop()
+        popGlobalRegistry(getSite())
 
     def test_documentation_translations_post(self):
         response = self.api_session.post(

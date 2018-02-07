@@ -9,7 +9,10 @@ from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.testing import z2
+from plone.uuid.interfaces import IUUIDGenerator
 from Testing import ZopeTestCase as ztc
+from zope.component import getGlobalSiteManager
+from zope.interface import implements
 
 import collective.restapi.pam
 import transaction
