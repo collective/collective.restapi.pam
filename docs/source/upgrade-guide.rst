@@ -7,10 +7,10 @@ necessary steps that are needed to upgrade to the lastest version.
 Upgrading to collective.restapi.pam 2.0.0
 -----------------------------------------
 
-The JSON response to a GET requests to the :ref:`translations` endpoint does not include
+The JSON response to a GET request to the :ref:`translations` endpoint does not include
 anymore the language of the actual content item.
 
-The JSON response to a GET requests to the :ref:`translations` endpoint includes the actual
+The JSON response to a GET request to the :ref:`translations` endpoint includes the actual
 translations in an attribute called `items` instead of `translations`.
 
 These changes were done to behave like the other existing endpoints that are also expandable, which as
