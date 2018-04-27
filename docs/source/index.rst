@@ -16,3 +16,4 @@ Contents
    :maxdepth: 2
 
    translations
+   upgrade-guide
