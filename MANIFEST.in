@@ -3,3 +3,9 @@ graft docs
 include *.rst
 global-exclude *.pyc
 include *.txt
+recursive-exclude parts *
+recursive-exclude docs/html *
+recursive-exclude docs/doctrees *
+exclude docs/Makefile
+exclude docs/make.bat
+
