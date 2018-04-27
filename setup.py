@@ -14,7 +14,7 @@ long_description = '\n\n'.join([
 
 setup(
     name='collective.restapi.pam',
-    version='2.0.0',
+    version='2.0.1.dev0',
     description="An add-on providing plone.restapi endpoint for translations handled using plone.app.multilingual",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers
