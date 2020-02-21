@@ -5,7 +5,8 @@ Changelog
 2.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Allow using object paths and UIDs when linking translations.
+  [erral]
 
 
 2.0.0 (2018-04-27)
