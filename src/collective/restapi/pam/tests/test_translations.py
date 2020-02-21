@@ -156,12 +156,27 @@ class TestLinkContents(TestCase):
         self.assertEqual(
             'Already translated into language es', res['error']['message'])
 
-    def test_translation_linking_succeeds(self):
+    def test_translation_linking_by_url_succeeds(self):
         self.request['BODY'] = '{"id": "http://nohost/plone/es/untranslated-test-document"}' # noqa
         service = self.traverse(
             '/plone/en/untranslated-test-document/@translations')
         service.reply()
         self.assertEqual(201, self.request.response.getStatus())
+
+    def test_translation_linking_by_path_succeeds(self):
+        self.request['BODY'] = '{"id": "/es/untranslated-test-document"}' # noqa
+        service = self.traverse(
+            '/plone/en/untranslated-test-document/@translations')
+        service.reply()
+        self.assertEqual(201, self.request.response.getStatus())
+
+    def test_translation_linking_by_uid_succeeds(self):
+        self.request['BODY'] = '{"id": "%s"}' % (self.untranslated_es_content.UID()) # noqa
+        service = self.traverse(
+            '/plone/en/untranslated-test-document/@translations')
+        service.reply()
+        self.assertEqual(201, self.request.response.getStatus())
+
 
 
 class TestUnLinkContents(TestCase):

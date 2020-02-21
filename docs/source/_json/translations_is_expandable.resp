@@ -3,6 +3,9 @@ Content-Type: application/json
 
 {
   "@components": {
+    "actions": {
+      "@id": "http://localhost:55001/plone/en/test-document/@actions"
+    }, 
     "breadcrumbs": {
       "@id": "http://localhost:55001/plone/en/test-document/@breadcrumbs"
     }, 
@@ -12,6 +15,9 @@ Content-Type: application/json
     "translations": {
       "@id": "http://localhost:55001/plone/en/test-document/@translations"
     }, 
+    "types": {
+      "@id": "http://localhost:55001/plone/en/test-document/@types"
+    }, 
     "workflow": {
       "@id": "http://localhost:55001/plone/en/test-document/@workflow"
     }
@@ -19,10 +25,10 @@ Content-Type: application/json
   "@id": "http://localhost:55001/plone/en/test-document", 
   "@type": "Document", 
   "UID": "SomeUUID000000000000000000000009", 
-  "allow_discussion": null, 
+  "allow_discussion": false, 
   "changeNote": "", 
   "contributors": [], 
-  "created": "2016-10-21T21:00:00+02:00", 
+  "created": "2016-10-21T19:00:00+00:00", 
   "creators": [
     "test_user_1_", 
     "admin"
@@ -33,9 +39,12 @@ Content-Type: application/json
   "expires": null, 
   "id": "test-document", 
   "is_folderish": false, 
-  "language": "en", 
+  "language": {
+    "title": "English", 
+    "token": "en"
+  }, 
   "layout": "document_view", 
-  "modified": "2016-10-21T21:00:00+02:00", 
+  "modified": "2016-10-21T19:00:00+00:00", 
   "parent": {
     "@id": "http://localhost:55001/plone/en", 
     "@type": "LRF", 

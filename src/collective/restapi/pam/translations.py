@@ -4,12 +4,14 @@ from plone.restapi.interfaces import IExpandableElement
 from plone.restapi.services import Service
 from Products.CMFCore.utils import getToolByName
 from zope.component import adapter
+from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from zope.interface import Interface
 from zope.interface import implementer
 
 import plone.protect.interfaces
 import pkg_resources
+import six
 
 try:
     # p.a.multilingual < 1.2
@@ -67,6 +69,14 @@ class LinkTranslations(Service):
     """ Link two content objects as translations of each other
     """
 
+    def __init__(self, context, request):
+        super(LinkTranslations, self).__init__(context, request)
+        self.portal = getMultiAdapter(
+            (self.context, self.request), name="plone_portal_state"
+        ).portal()
+        self.portal_url = self.portal.absolute_url()
+        self.catalog = getToolByName(self.context, "portal_catalog")
+
     def reply(self):
         # Disable CSRF protection
         if 'IDisableCSRFProtection' in dir(plone.protect.interfaces):
@@ -81,7 +91,8 @@ class LinkTranslations(Service):
                 type='BadRequest',
                 message='Missing content id to link to'))
 
-        target = self._traverse(id_)
+        target = self.get_object(id_)
+
         if target is None:
             self.request.response.setStatus(400)
             return dict(error=dict(
@@ -104,17 +115,24 @@ class LinkTranslations(Service):
             'Location', self.context.absolute_url())
         return {}
 
-    def _traverse(self, url):
-        purl = getToolByName(self.context, 'portal_url')
-        portal = purl.getPortalObject()
-        portal_url = portal.absolute_url()
-        if url.startswith(portal_url):
-            content_path = url[len(portal_url)+1:]
-            content_path = content_path.split('/')
-            content_item = portal.restrictedTraverse(content_path)
-            return content_item
-
-        return None
+    def get_object(self, key):
+        if isinstance(key, six.string_types):
+            if key.startswith(self.portal_url):
+                # Resolve by URL
+                key = key[len(self.portal_url) + 1 :]
+                if six.PY2:
+                    key = key.encode("utf8")
+                return self.portal.restrictedTraverse(key, None)
+            elif key.startswith("/"):
+                if six.PY2:
+                    key = key.encode("utf8")
+                # Resolve by path
+                return self.portal.restrictedTraverse(key.lstrip("/"), None)
+            else:
+                # Resolve by UID
+                brain = self.catalog(UID=key)
+                if brain:
+                    return brain[0].getObject()
 
 
 class UnlinkTranslations(Service):
