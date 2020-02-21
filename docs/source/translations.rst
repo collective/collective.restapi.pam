@@ -26,14 +26,33 @@ endpoint including the `id` of the content which should be linked to. The
     :request: _json/translations_post.req
 
 
+.. literalinclude:: _json/translations_post.resp
+   :language: http
+
+
 .. note::
     "id" is a required field and needs to point to an existing content on the site.
 
 The API will return a `201 Created` response if the linking was successful.
 
+We can also use the object's path to link the translation instead of the full URL:
 
-.. literalinclude:: _json/translations_post.resp
+..  http:example:: curl httpie python-requests
+    :request: _json/translations_post_by_id.req
+
+.. literalinclude:: _json/translations_post_by_id.resp
    :language: http
+
+
+We can also use the object's UID to link the translation:
+
+..  http:example:: curl httpie python-requests
+    :request: _json/translations_post_by_uid.req
+
+.. literalinclude:: _json/translations_post_by_id.resp
+   :language: http
+
+
 
 
 After linking the contents we can get the list of the translations of that
