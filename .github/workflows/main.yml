@@ -32,11 +32,11 @@ jobs:
       - name: pip install
         run: pip install -r requirements.txt
       - name: choose Plone version
-        run: sed -ie "s#pam-x.x.x.cfg#plone-${{ matrix.pam-version }}.cfg#" ci.cfg
+        run: sed -ie "s#pam-x.x.x.cfg#plone-${{ matrix.pam-version }}.cfg#" travis.cfg
 
       # buildout
       - name: buildout
-        run: buildout -t 10 -c ci.cfg
+        run: buildout -t 10 -c travis.cfg
         env:
           CI: true
 
