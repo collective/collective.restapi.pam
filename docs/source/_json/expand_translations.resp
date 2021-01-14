@@ -30,11 +30,11 @@ Content-Type: application/json
   }, 
   "@id": "http://localhost:55001/plone/en/test-document", 
   "@type": "Document", 
-  "UID": "SomeUUID000000000000000000000009", 
+  "UID": "SomeUUID000000000000000000000007", 
   "allow_discussion": false, 
   "changeNote": "", 
   "contributors": [], 
-  "created": "2016-10-21T19:00:00+00:00", 
+  "created": "1995-07-31T13:45:00", 
   "creators": [
     "test_user_1_", 
     "admin"
@@ -50,14 +50,16 @@ Content-Type: application/json
     "token": "en"
   }, 
   "layout": "document_view", 
-  "modified": "2016-10-21T19:00:00+00:00", 
+  "modified": "1995-07-31T17:30:00", 
+  "next_item": {}, 
   "parent": {
     "@id": "http://localhost:55001/plone/en", 
-    "@type": "LRF", 
+    "@type": "Folder", 
     "description": "", 
     "review_state": "published", 
     "title": "English"
   }, 
+  "previous_item": {}, 
   "relatedItems": [], 
   "review_state": "private", 
   "rights": "", 
