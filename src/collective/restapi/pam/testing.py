@@ -8,6 +8,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import SITE_OWNER_NAME
 from plone.app.testing import SITE_OWNER_PASSWORD
+from plone.restapi.testing import DATE_TIME_FIXTURE
 from plone.testing import z2
 from plone.uuid.interfaces import IUUIDGenerator
 from Testing import ZopeTestCase as ztc
@@ -20,7 +21,7 @@ import transaction
 
 class CollectiveRestapiPamLayer(PloneSandboxLayer):
 
-    defaultBases = (PLONE_FIXTURE,)
+    defaultBases = (PLONE_FIXTURE, DATE_TIME_FIXTURE)
 
     class Session(dict):
         def set(self, key, value):

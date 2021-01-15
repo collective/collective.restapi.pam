@@ -51,14 +51,3 @@ jobs:
       # test
       - name: test
         run: bin/test
-
-      # test no uncommited changes
-      - name: test no uncommited changes
-        run: bin/test-no-uncommitted-doc-changes
-        env:
-          PYTHON_VERSION: ${{ matrix.python-version }}
-          PLONE_VERSION: ${{ matrix.plone-version }}
-
-      # test sphinx warnings
-      - name: sphinx
-        run: bin/test-no-sphinx-warnings

@@ -3,9 +3,9 @@ from base64 import b64encode
 from collective.restapi.pam.testing import (
     COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING,
 )  # noqa
-from DateTime import DateTime
 from datetime import datetime
 from datetime import timedelta
+from DateTime import DateTime
 from freezegun import freeze_time
 from plone import api
 from plone.app.discussion.interfaces import IConversation
@@ -26,6 +26,7 @@ from plone.namedfile.file import NamedBlobImage
 from plone.registry.interfaces import IRegistry
 from plone.restapi.testing import register_static_uuid_utility
 from plone.restapi.testing import RelativeSession
+from plone.restapi.tests.statictime import StaticTime
 from plone.testing.z2 import Browser
 from zope.component import createObject
 from zope.component import getMultiAdapter
@@ -108,11 +109,10 @@ def save_request_and_response_for_docs(name, response):
         resp.write(response.content)
 
 
-class TestDocumentation(unittest.TestCase):
-
-    layer = COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING
-
+class TestDocumentationBase(unittest.TestCase):
     def setUp(self):
+        self.statictime = self.setup_with_context_manager(StaticTime())
+
         self.app = self.layer["app"]
         self.request = self.layer["request"]
         self.portal = self.layer["portal"]
@@ -122,14 +122,57 @@ class TestDocumentation(unittest.TestCase):
         pushGlobalRegistry(getSite())
         register_static_uuid_utility(prefix="SomeUUID")
 
-        self.time_freezer = freeze_time("2016-10-21 19:00:00")
-        self.frozen_time = self.time_freezer.start()
-
         self.api_session = RelativeSession(self.portal_url)
         self.api_session.headers.update({"Accept": "application/json"})
         self.api_session.auth = (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
 
+        self.browser = Browser(self.app)
+        self.browser.handleErrors = False
+        self.browser.addHeader(
+            "Authorization", "Basic %s:%s" % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+        )
+
         setRoles(self.portal, TEST_USER_ID, ["Manager"])
+
+    def setup_with_context_manager(self, cm):
+        """Use a contextmanager to setUp a test case.
+        Registering the cm's __exit__ as a cleanup hook *guarantees* that it
+        will be called after a test run, unlike tearDown().
+        This is used to make sure plone.restapi never leaves behind any time
+        freezing monkey patches that haven't gotten reverted.
+        """
+        val = cm.__enter__()
+        self.addCleanup(cm.__exit__, None, None, None)
+        return val
+
+    def tearDown(self):
+        popGlobalRegistry(getSite())
+        self.api_session.close()
+
+
+class TestDocumentation(TestDocumentationBase):
+
+    layer = COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING
+
+    def setUp(self):
+        super(TestDocumentation, self).setUp()
+        # self.app = self.layer["app"]
+        # self.request = self.layer["request"]
+        # self.portal = self.layer["portal"]
+        # self.portal_url = self.portal.absolute_url()
+
+        # # Register custom UUID generator to produce stable UUIDs during tests
+        # pushGlobalRegistry(getSite())
+        # register_static_uuid_utility(prefix="SomeUUID")
+
+        # self.time_freezer = freeze_time("2016-10-21 19:00:00")
+        # self.frozen_time = self.time_freezer.start()
+
+        # self.api_session = RelativeSession(self.portal_url)
+        # self.api_session.headers.update({"Accept": "application/json"})
+        # self.api_session.auth = (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+
+        # setRoles(self.portal, TEST_USER_ID, ["Manager"])
 
         language_tool = api.portal.get_tool("portal_languages")
         language_tool.addSupportedLanguage("en")
@@ -151,15 +194,16 @@ class TestDocumentation(unittest.TestCase):
         import transaction
 
         transaction.commit()
-        self.browser = Browser(self.app)
-        self.browser.handleErrors = False
-        self.browser.addHeader(
-            "Authorization", "Basic %s:%s" % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
-        )
+        # self.browser = Browser(self.app)
+        # self.browser.handleErrors = False
+        # self.browser.addHeader(
+        #     "Authorization", "Basic %s:%s" % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
+        # )
 
-    def tearDown(self):
-        self.time_freezer.stop()
-        popGlobalRegistry(getSite())
+    # def tearDown(self):
+    #     super(TestDocumentation, self).tearDown()
+    #     self.time_freezer.stop()
+    #     # popGlobalRegistry(getSite())
 
     def test_documentation_translations_post(self):
         response = self.api_session.post(

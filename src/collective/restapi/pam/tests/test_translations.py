@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from base64 import b64encode
-from collective.restapi.pam.testing import (
-    COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING,
-)  # noqa
-from collective.restapi.pam.testing import (
-    COLLECTIVE_RESTAPI_PAM_INTEGRATION_TESTING,
-)  # noqa
+from collective.restapi.pam.testing import COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING  # noqa; noqa
+from collective.restapi.pam.testing import COLLECTIVE_RESTAPI_PAM_INTEGRATION_TESTING
+from plone import api
 from plone.app.multilingual.browser.setup import SetupMultilingualSite
 from plone.app.testing import login
 from plone.app.testing import SITE_OWNER_NAME
@@ -18,6 +15,7 @@ from ZPublisher.pubevents import PubStart
 import pkg_resources
 import requests
 import transaction
+
 
 try:
     # p.a.multilingual < 1.2
@@ -295,6 +293,31 @@ class TestLinkContentsFunctional(TestCase):
         )
         self.assertEqual(400, response.status_code)
 
+    def test_get_translations_on_content_with_no_permissions(self):
+
+        response = requests.post(
+            "{}/@translations".format(self.en_content.absolute_url()),
+            headers={"Accept": "application/json"},
+            auth=(SITE_OWNER_NAME, SITE_OWNER_PASSWORD),
+            json={"id": self.es_content.absolute_url()},
+        )
+        self.assertEqual(201, response.status_code)
+
+        transaction.commit()
+        api.content.transition(self.en_content, "publish")
+        transaction.commit()
+
+        response = requests.get(
+            "{}/@translations".format(self.en_content.absolute_url()),
+            headers={"Accept": "application/json"},
+        )
+
+        self.assertEqual(200, response.status_code)
+
+        response = response.json()
+        self.assertTrue(len(response["items"]) == 0)
+
+
 
 class TestUnLinkContentsFunctional(TestCase):
     layer = COLLECTIVE_RESTAPI_PAM_FUNCTIONAL_TESTING
@@ -354,3 +377,4 @@ class TestUnLinkContentsFunctional(TestCase):
             json={"language": "es"},
         )
         self.assertEqual(400, response.status_code)
+
